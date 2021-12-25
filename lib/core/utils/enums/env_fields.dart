@@ -1,4 +1,4 @@
-enum EnvFields { baseUrl, apiKey }
+enum EnvFields { baseUrl, apiKey, privateApiKey }
 
 extension EnvFieldsName on EnvFields {
   String get name {
@@ -7,6 +7,8 @@ extension EnvFieldsName on EnvFields {
         return "BASE_URL";
       case EnvFields.apiKey:
         return "API_KEY";
+      case EnvFields.privateApiKey:
+        return "PRIVATE_API_KEY";
     }
   }
 }

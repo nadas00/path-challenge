@@ -9,4 +9,6 @@ abstract class INetworkManager {
       BaseOptions(baseUrl: baseUrl, headers: headers),
     );
   }
+
+  addInterceptor(Interceptor interceptor);
 }

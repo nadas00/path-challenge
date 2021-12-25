@@ -11,4 +11,9 @@ class NetworkManager extends INetworkManager {
   }
 
   NetworkManager._();
+
+  @override
+  addInterceptor(Interceptor interceptor) {
+    _dio.interceptors.add(interceptor);
+  }
 }
