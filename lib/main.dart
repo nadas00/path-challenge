@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:path_challenge/core/manager/network/network_manager.dart';
+import 'package:path_challenge/core/utils/enums/env_fields.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load();
+  NetworkManager.instance.init(dotenv.get(EnvFields.baseUrl.name), {});
   runApp(const MyApp());
 }
 
