@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:path_challenge/presentation/home/model/network/characters_response_model.dart';
 
 class CharacterCard extends StatelessWidget {
-  final String? text;
-  final String? subText;
-  final String? url;
+  final CharactersModel charactersModel;
   final double height;
   final double width;
 
@@ -12,9 +11,7 @@ class CharacterCard extends StatelessWidget {
 
   const CharacterCard({
     Key? key,
-    this.text,
-    this.subText,
-    this.url,
+    required this.charactersModel,
     this.height = 350,
     this.width = double.infinity,
     this.onTap,
@@ -28,9 +25,9 @@ class CharacterCard extends StatelessWidget {
         onTap: onTap,
         child: Stack(
           children: [
-            if (url != null)
+            if (charactersModel.hasThumbnail)
               CachedNetworkImage(
-                imageUrl: url!,
+                imageUrl: charactersModel.createThumbnailUrl!,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: ShapeDecoration(
                     shape: const RoundedRectangleBorder(
@@ -39,14 +36,16 @@ class CharacterCard extends StatelessWidget {
                       ),
                     ),
                     image: DecorationImage(
-                        image: imageProvider, fit: BoxFit.cover),
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(
-                  Icons.error,
-                  color: Colors.white,
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                errorWidget: (context, url, error) => const Center(
+                  child: Icon(Icons.error, color: Colors.white),
                 ),
               ),
             Align(
@@ -56,8 +55,9 @@ class CharacterCard extends StatelessWidget {
                 margin: const EdgeInsets.all(16),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color:
-                      (text != null && subText != null) ? Colors.black54 : null,
+                  color: charactersModel.hasCharacterNameAndDescription
+                      ? Colors.black54
+                      : null,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
@@ -65,9 +65,9 @@ class CharacterCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (text != null)
+                    if (charactersModel.hasCharacterName)
                       Text(
-                        text!,
+                        charactersModel.name!,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
@@ -76,9 +76,9 @@ class CharacterCard extends StatelessWidget {
                             .headline5!
                             .copyWith(color: Colors.white),
                       ),
-                    if (text != subText)
+                    if (charactersModel.hasDescription)
                       Text(
-                        subText!,
+                        charactersModel.description!,
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context)

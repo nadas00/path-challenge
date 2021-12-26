@@ -5,27 +5,16 @@ import 'package:path_challenge/presentation/home/model/network/characters_respon
 
 class HomeBlocRepository {
   late final PagingController<int, CharacterCard> pagingController;
-  late HomeService _service;
-  late int _offset;
+
   late int _limit;
+  late int _offset;
+  late HomeService _service;
   int? _total;
 
   init() {
-    _offset = 0;
-    _limit = 30;
-    _service = HomeService();
-    pagingController = PagingController<int, CharacterCard>(firstPageKey: 0);
-
-    pagingController.addPageRequestListener(
-      (pageKey) {
-        fetchNewCharacterData(
-          controller: pagingController,
-          limit: _limit,
-          offset: _offset,
-          service: _service,
-        );
-      },
-    );
+    initPagingValues();
+    initService();
+    initPaginationController();
   }
 
   Future<void> fetchNewCharacterData({
@@ -41,12 +30,11 @@ class HomeBlocRepository {
     setTotalCount(characterResponseModel?.data?.total);
 
     updatePageController(
-        controller: controller,
-        model: characterResponseModel,
-        total: _total ?? 0,
-        limit: _limit);
-
-    updateOffset();
+      controller: controller,
+      model: characterResponseModel,
+      total: _total ?? 0,
+      limit: _limit,
+    );
   }
 
   void updatePageController({
@@ -59,39 +47,43 @@ class HomeBlocRepository {
       controller.appendPage(
           List.generate(
             model?.data?.results?.length ?? 0,
-            (index) => CharacterCard(
-              url: createThumbnailUrl(
-                path: model?.data?.results?[index].thumbnail?.path,
-                extension: model?.data?.results?[index].thumbnail?.extension,
-              ),
-              text: model?.data?.results?[index].name,
-              subText: model?.data?.results?[index].description,
-            ),
+            (index) {
+              final currentModel = model?.data?.results?[index];
+              return CharacterCard(charactersModel: currentModel!);
+            },
           ),
           _limit);
     } else {
       controller.appendLastPage(
         List.generate(
           model?.data?.results?.length ?? 0,
-          (index) => CharacterCard(
-            url: createThumbnailUrl(
-              path: model?.data?.results?[index].thumbnail?.path,
-              extension: model?.data?.results?[index].thumbnail?.extension,
-            ),
-            text: model?.data?.results?[index].name,
-            subText: model?.data?.results?[index].description,
-          ),
+          (index) {
+            final currentModel = model?.data?.results?[index];
+            return CharacterCard(charactersModel: currentModel!);
+          },
         ),
       );
     }
   }
 
-  String? createThumbnailUrl(
-      {required String? path, required String? extension}) {
-    if (path != null && extension != null) {
-      return path + '/landscape_incredible' + '.' + extension;
-    }
-    return null;
+  void initPaginationController() {
+    pagingController = PagingController<int, CharacterCard>(firstPageKey: 0);
+    pagingController.addPageRequestListener(
+      (pageKey) {
+        fetchNewCharacterData(
+          controller: pagingController,
+          limit: _limit,
+          offset: _offset,
+          service: _service,
+        );
+        updateOffset();
+      },
+    );
+  }
+
+  void initPagingValues() {
+    _offset = 0;
+    _limit = 30;
   }
 
   void setTotalCount(int? total) {
@@ -101,9 +93,10 @@ class HomeBlocRepository {
   }
 
   void updateOffset() {
-    print(_offset);
-    print(_limit);
-
     _offset += _limit;
+  }
+
+  void initService() {
+    _service = HomeService();
   }
 }

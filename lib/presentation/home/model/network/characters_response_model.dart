@@ -107,6 +107,24 @@ class CharactersModel {
   final Series? series;
 
   Map<String, dynamic> toJson() => _$CharactersModelToJson(this);
+
+  bool get hasThumbnail =>
+      (thumbnail?.extension != null && thumbnail?.path != null);
+
+  bool get hasCharacterName => name != null;
+  bool get hasDescription => description != null;
+  bool get hasCharacterNameAndDescription =>
+      (name != null && description != null);
+
+  String? get createThumbnailUrl {
+    if (thumbnail?.path != null && thumbnail?.extension != null) {
+      return thumbnail!.path! +
+          '/landscape_incredible' +
+          '.' +
+          thumbnail!.extension!;
+    }
+    return null;
+  }
 }
 
 @JsonSerializable(explicitToJson: true)
