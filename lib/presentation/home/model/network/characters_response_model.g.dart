@@ -53,11 +53,8 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
 CharactersModel _$CharactersModelFromJson(Map<String, dynamic> json) =>
     CharactersModel(
       id: json['id'] as int?,
-      firstName: json['firstName'] as String?,
-      middleName: json['middleName'] as String?,
-      lastName: json['lastName'] as String?,
-      suffix: json['suffix'] as String?,
-      fullName: json['fullName'] as String?,
+      name: json['name'] as String?,
+      description: json['description'] as String?,
       modified: json['modified'] as String?,
       resourceURI: json['resourceURI'] as String?,
       urls: (json['urls'] as List<dynamic>?)
@@ -66,36 +63,33 @@ CharactersModel _$CharactersModelFromJson(Map<String, dynamic> json) =>
       thumbnail: json['thumbnail'] == null
           ? null
           : Thumbnail.fromJson(json['thumbnail'] as Map<String, dynamic>),
-      series: json['series'] == null
-          ? null
-          : Series.fromJson(json['series'] as Map<String, dynamic>),
-      stories: json['stories'] == null
-          ? null
-          : Series.fromJson(json['stories'] as Map<String, dynamic>),
       comics: json['comics'] == null
           ? null
           : Series.fromJson(json['comics'] as Map<String, dynamic>),
+      stories: json['stories'] == null
+          ? null
+          : Series.fromJson(json['stories'] as Map<String, dynamic>),
       events: json['events'] == null
           ? null
           : Series.fromJson(json['events'] as Map<String, dynamic>),
+      series: json['series'] == null
+          ? null
+          : Series.fromJson(json['series'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CharactersModelToJson(CharactersModel instance) =>
     <String, dynamic>{
-      'comics': instance.comics?.toJson(),
-      'events': instance.events?.toJson(),
-      'firstName': instance.firstName,
-      'fullName': instance.fullName,
       'id': instance.id,
-      'lastName': instance.lastName,
-      'middleName': instance.middleName,
+      'name': instance.name,
+      'description': instance.description,
       'modified': instance.modified,
       'resourceURI': instance.resourceURI,
-      'series': instance.series?.toJson(),
-      'stories': instance.stories?.toJson(),
-      'suffix': instance.suffix,
-      'thumbnail': instance.thumbnail?.toJson(),
       'urls': instance.urls?.map((e) => e.toJson()).toList(),
+      'thumbnail': instance.thumbnail?.toJson(),
+      'comics': instance.comics?.toJson(),
+      'stories': instance.stories?.toJson(),
+      'events': instance.events?.toJson(),
+      'series': instance.series?.toJson(),
     };
 
 Series _$SeriesFromJson(Map<String, dynamic> json) => Series(

@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:path_challenge/product/models/base/base_response_model.dart';
 
 part 'characters_response_model.g.dart';
@@ -76,38 +77,32 @@ class Data implements BaseResponseDataModel<List<CharactersModel>> {
 class CharactersModel {
   CharactersModel({
     required this.id,
-    required this.firstName,
-    required this.middleName,
-    required this.lastName,
-    required this.suffix,
-    required this.fullName,
+    required this.name,
+    required this.description,
     required this.modified,
     required this.resourceURI,
     required this.urls,
     required this.thumbnail,
-    required this.series,
-    required this.stories,
     required this.comics,
+    required this.stories,
     required this.events,
+    required this.series,
   });
 
   factory CharactersModel.fromJson(Map<String, dynamic> json) =>
       _$CharactersModelFromJson(json);
 
-  final Series? comics;
-  final Series? events;
-  final String? firstName;
-  final String? fullName;
   final int? id;
-  final String? lastName;
-  final String? middleName;
+  final String? name;
+  final String? description;
   final String? modified;
   final String? resourceURI;
-  final Series? series;
-  final Series? stories;
-  final String? suffix;
-  final Thumbnail? thumbnail;
   final List<Urls>? urls;
+  final Thumbnail? thumbnail;
+  final Series? comics;
+  final Series? stories;
+  final Series? events;
+  final Series? series;
 
   Map<String, dynamic> toJson() => _$CharactersModelToJson(this);
 }

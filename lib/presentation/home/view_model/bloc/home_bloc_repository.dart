@@ -1,6 +1,7 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:path_challenge/presentation/home/service/home_service.dart';
 import 'package:path_challenge/presentation/widget/character/character_card.dart';
+import 'package:path_challenge/presentation/home/model/network/characters_response_model.dart';
 
 class HomeBlocRepository {
   late final PagingController<int, CharacterCard> pagingController;
@@ -12,26 +13,59 @@ class HomeBlocRepository {
     pagingController = PagingController<int, CharacterCard>(firstPageKey: 0);
 
     _service = HomeService();
-    //_service.fetchCharacters();
-    //TODO: CHANGE MOCK DATA
-    pagingController.appendLastPage(
+
+    fetchNewCharacterData(
+      service: _service,
+      controller: pagingController,
+      pageKey: 0,
+      fetchSize: 30,
+      maxItemSize: 90,
+    );
+
+    updatePageController(
+      controller: pagingController,
+      model: CharacterResponseModel(),
+    );
+  }
+
+  fetchNewCharacterData({
+    required HomeService service,
+    required PagingController<int, CharacterCard> controller,
+    required int pageKey,
+    required int fetchSize,
+    required int maxItemSize,
+  }) async {
+    CharacterResponseModel? characterResponseModel =
+        await _service.fetchCharacters();
+
+    updatePageController(controller: controller, model: characterResponseModel);
+  }
+
+  void updatePageController({
+    required PagingController<int, CharacterCard> controller,
+    required CharacterResponseModel? model,
+  }) {
+    controller.appendLastPage(
       List.generate(
-        10,
+        model?.data?.results?.length ?? 0,
         (index) => CharacterCard(
-          url: ironManImg,
-          text: "Iron Man",
-          subText: "Iron Man is Best" * 10,
+          url: createThumbnailUrl(
+            path: model?.data?.results?[index].thumbnail?.path,
+            extension: model?.data?.results?[index].thumbnail?.extension,
+          ),
+          text: model?.data?.results?[index].name,
+          subText: model?.data?.results?[index].description,
         ),
       ),
     );
   }
 
-  fetchNewCharacterData(
-    PagingController controller,
-    int pageKey,
-    int fetchSize,
-    int maxItemSize,
-  ) {
-    // TODO: IMLEMENT METHOD
+  String? createThumbnailUrl(
+      {required String? path, required String? extension}) {
+    if (path != null && extension != null) {
+      print(path + '/landscape_incredible' + extension);
+      return path + '/landscape_incredible' + '.' + extension;
+    }
+    return null;
   }
 }
