@@ -1,6 +1,21 @@
 part of 'detail_bloc.dart';
 
-@immutable
-abstract class DetailState {}
+class DetailState extends Equatable {
+  const DetailState({
+    this.characterFetchStatus = FetchingStatus.unknown,
+  });
 
-class DetailInitial extends DetailState {}
+  final FetchingStatus characterFetchStatus;
+
+  @override
+  List<Object> get props => [characterFetchStatus];
+
+  DetailState copyWith({
+    FetchingStatus? characterFetchStatus,
+    CharacterComics? characterComics,
+  }) {
+    return DetailState(
+      characterFetchStatus: characterFetchStatus ?? this.characterFetchStatus,
+    );
+  }
+}

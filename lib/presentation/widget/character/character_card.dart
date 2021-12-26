@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:path_challenge/presentation/home/model/network/characters_response_model.dart';
+import 'package:path_challenge/presentation/widget/cached_network_image/cached_network_image_fail_widget.dart';
+import 'package:path_challenge/presentation/widget/cached_network_image/cached_network_image_loading_widget.dart';
 
 class CharacterCard extends StatelessWidget {
   final CharactersModel charactersModel;
@@ -43,12 +45,10 @@ class CharacterCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                placeholder: (context, url) => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                errorWidget: (context, url, error) => const Center(
-                  child: Icon(Icons.error, color: Colors.white),
-                ),
+                placeholder: (context, url) =>
+                    const CachedNetworkLoadingWidget(),
+                errorWidget: (context, url, error) =>
+                    const CachedNetworkFailWidget(),
               ),
             if (!displayImageOnly)
               Align(

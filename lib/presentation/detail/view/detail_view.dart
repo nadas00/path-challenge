@@ -1,8 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_challenge/core/utils/enums/fetching_status_enum.dart';
 
 import 'package:path_challenge/core/utils/extensions/widget/sliver_to_box_adapter_extension.dart';
+import 'package:path_challenge/presentation/detail/view_model/bloc/detail_bloc.dart';
+import 'package:path_challenge/presentation/detail/view_model/bloc/detail_bloc_repository.dart';
 import 'package:path_challenge/presentation/home/model/network/characters_response_model.dart';
+import 'package:path_challenge/presentation/widget/cached_network_image/cached_network_image_fail_widget.dart';
+import 'package:path_challenge/presentation/widget/cached_network_image/cached_network_image_loading_widget.dart';
 import 'package:path_challenge/presentation/widget/character/character_card.dart';
+import 'package:path_challenge/presentation/detail/model/character_comics_response_model.dart';
 
 part 'widget/character_comics_list_view.dart';
 
@@ -55,9 +63,48 @@ class CharacterDetailView extends StatelessWidget {
                     .textTheme
                     .bodyText2!
                     .copyWith(color: Colors.white),
-              ).toSliver
+              ).toSliver,
+              const SizedBox(height: 20).toSliver,
             ],
-            body: _CharacterComicsListView(comics: charactersModel.comics),
+            body: RepositoryProvider(
+              create: (_) => DetailBlocRepository()..init(),
+              child: BlocProvider(
+                create: (context) =>
+                    DetailBloc(repository: context.read<DetailBlocRepository>())
+                      ..add(
+                        CharacterComicsRequested(
+                          startYear: 2005,
+                          characterId: charactersModel.id,
+                          limit: 10,
+                        ),
+                      ),
+                child: BlocBuilder<DetailBloc, DetailState>(
+                  builder: (context, state) {
+                    switch (state.characterFetchStatus) {
+                      case FetchingStatus.unknown:
+                        return const Text(
+                          "unknown",
+                          style: TextStyle(color: Colors.white),
+                        );
+                      case FetchingStatus.loading:
+                        return const Text(
+                          "loading",
+                          style: TextStyle(color: Colors.white),
+                        );
+                      case FetchingStatus.loaded:
+                        return _CharacterComicsListView(
+                          comics: context.read<DetailBlocRepository>().comics,
+                        );
+                      case FetchingStatus.failed:
+                        return const Text(
+                          "failed",
+                          style: TextStyle(color: Colors.white),
+                        );
+                    }
+                  },
+                ),
+              ),
+            ),
           ),
         ),
       ),

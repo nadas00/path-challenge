@@ -21,10 +21,10 @@ class Data extends BaseResponseDataModel<List<CharacterComics>> {
 
 @JsonSerializable(explicitToJson: true)
 class CharacterComics {
-  String? id;
-  String? digitalId;
+  int? id;
+  int? digitalId;
   String? title;
-  String? issueNumber;
+  double? issueNumber;
   String? variantDescription;
   String? description;
   String? modified;
@@ -34,7 +34,7 @@ class CharacterComics {
   String? ean;
   String? issn;
   String? format;
-  String? pageCount;
+  int? pageCount;
   List<TextObjects>? textObjects;
   String? resourceURI;
   List<Urls>? urls;
@@ -84,6 +84,18 @@ class CharacterComics {
   factory CharacterComics.fromJson(Map<String, dynamic> json) =>
       _$CharacterComicsFromJson(json);
   Map<String, dynamic> toJson() => _$CharacterComicsToJson(this);
+
+  bool get hasThumbnail =>
+      (thumbnail?.extension != null && thumbnail?.path != null);
+  String? get createThumbnailUrl {
+    if (thumbnail?.path != null && thumbnail?.extension != null) {
+      return thumbnail!.path! +
+          '/landscape_incredible' +
+          '.' +
+          thumbnail!.extension!;
+    }
+    return null;
+  }
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -140,7 +152,7 @@ class Dates {
 @JsonSerializable(explicitToJson: true)
 class Prices {
   String? type;
-  String? price;
+  double? price;
   Prices({
     this.type,
     this.price,
@@ -164,8 +176,8 @@ class Thumbnail {
 
 @JsonSerializable(explicitToJson: true)
 class Creators {
-  String? available;
-  String? returned;
+  int? available;
+  int? returned;
   String? collectionURI;
   List<Items>? items;
   Creators({

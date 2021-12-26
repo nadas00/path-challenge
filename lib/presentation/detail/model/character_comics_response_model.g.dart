@@ -50,10 +50,10 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
 
 CharacterComics _$CharacterComicsFromJson(Map<String, dynamic> json) =>
     CharacterComics(
-      id: json['id'] as String?,
-      digitalId: json['digitalId'] as String?,
+      id: json['id'] as int?,
+      digitalId: json['digitalId'] as int?,
       title: json['title'] as String?,
-      issueNumber: json['issueNumber'] as String?,
+      issueNumber: (json['issueNumber'] as num?)?.toDouble(),
       variantDescription: json['variantDescription'] as String?,
       description: json['description'] as String?,
       modified: json['modified'] as String?,
@@ -63,7 +63,7 @@ CharacterComics _$CharacterComicsFromJson(Map<String, dynamic> json) =>
       ean: json['ean'] as String?,
       issn: json['issn'] as String?,
       format: json['format'] as String?,
-      pageCount: json['pageCount'] as String?,
+      pageCount: json['pageCount'] as int?,
       textObjects: (json['textObjects'] as List<dynamic>?)
           ?.map((e) => TextObjects.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -188,7 +188,7 @@ Map<String, dynamic> _$DatesToJson(Dates instance) => <String, dynamic>{
 
 Prices _$PricesFromJson(Map<String, dynamic> json) => Prices(
       type: json['type'] as String?,
-      price: json['price'] as String?,
+      price: (json['price'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$PricesToJson(Prices instance) => <String, dynamic>{
@@ -207,8 +207,8 @@ Map<String, dynamic> _$ThumbnailToJson(Thumbnail instance) => <String, dynamic>{
     };
 
 Creators _$CreatorsFromJson(Map<String, dynamic> json) => Creators(
-      available: json['available'] as String?,
-      returned: json['returned'] as String?,
+      available: json['available'] as int?,
+      returned: json['returned'] as int?,
       collectionURI: json['collectionURI'] as String?,
       items: (json['items'] as List<dynamic>?)
           ?.map((e) => Items.fromJson(e as Map<String, dynamic>))
