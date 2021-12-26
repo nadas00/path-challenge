@@ -8,7 +8,7 @@ import 'package:path_challenge/presentation/detail/view_model/bloc/detail_bloc.d
 import 'package:path_challenge/presentation/detail/view_model/bloc/detail_bloc_repository.dart';
 import 'package:path_challenge/presentation/home/model/network/characters_response_model.dart';
 import 'package:path_challenge/presentation/widget/cached_network_image/cached_network_image_fail_widget.dart';
-import 'package:path_challenge/presentation/widget/cached_network_image/cached_network_image_loading_widget.dart';
+import 'package:path_challenge/presentation/widget/shared/network_loading_widget.dart';
 import 'package:path_challenge/presentation/widget/character/character_card.dart';
 import 'package:path_challenge/presentation/detail/model/character_comics_response_model.dart';
 
@@ -81,25 +81,23 @@ class CharacterDetailView extends StatelessWidget {
                 child: BlocBuilder<DetailBloc, DetailState>(
                   builder: (context, state) {
                     switch (state.characterFetchStatus) {
-                      case FetchingStatus.unknown:
-                        return const Text(
-                          "unknown",
-                          style: TextStyle(color: Colors.white),
-                        );
-                      case FetchingStatus.loading:
-                        return const Text(
-                          "loading",
-                          style: TextStyle(color: Colors.white),
-                        );
                       case FetchingStatus.loaded:
                         return _CharacterComicsListView(
                           comics: context.read<DetailBlocRepository>().comics,
                         );
                       case FetchingStatus.failed:
-                        return const Text(
-                          "failed",
-                          style: TextStyle(color: Colors.white),
+                        return Text(
+                          "Failed to Load Comics",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6!
+                              .copyWith(color: Colors.white),
                         );
+                      case FetchingStatus.loading:
+                        return const NetworkLoadingWidget();
+                      default:
+                        return const SizedBox();
                     }
                   },
                 ),

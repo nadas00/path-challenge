@@ -42,7 +42,7 @@ class _CharacterComicsListView extends StatelessWidget {
                           ),
                         ),
                         placeholder: (context, url) =>
-                            const CachedNetworkLoadingWidget(),
+                            const NetworkLoadingWidget(),
                         errorWidget: (context, url, error) =>
                             const CachedNetworkFailWidget(),
                       ),

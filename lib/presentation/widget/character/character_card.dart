@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:path_challenge/presentation/home/model/network/characters_response_model.dart';
 import 'package:path_challenge/presentation/widget/cached_network_image/cached_network_image_fail_widget.dart';
-import 'package:path_challenge/presentation/widget/cached_network_image/cached_network_image_loading_widget.dart';
+import 'package:path_challenge/presentation/widget/shared/network_loading_widget.dart';
 
 class CharacterCard extends StatelessWidget {
   final CharactersModel charactersModel;
@@ -48,8 +48,7 @@ class CharacterCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  placeholder: (context, url) =>
-                      const CachedNetworkLoadingWidget(),
+                  placeholder: (context, url) => const NetworkLoadingWidget(),
                   errorWidget: (context, url, error) =>
                       const CachedNetworkFailWidget(),
                 ),

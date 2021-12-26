@@ -16,7 +16,7 @@ class _FetchingPlaceHolderCards extends StatelessWidget {
       children: List.generate(
         4,
         (index) => index == 3
-            ? const CachedNetworkLoadingWidget()
+            ? const NetworkLoadingWidget()
             : const _ShimmerBundleCard(),
       ),
     );

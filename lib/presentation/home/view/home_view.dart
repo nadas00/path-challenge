@@ -4,7 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:path_challenge/presentation/detail/view/detail_view.dart';
 import 'package:path_challenge/presentation/home/view_model/bloc/home_bloc.dart';
 import 'package:path_challenge/presentation/home/view_model/bloc/home_bloc_repository.dart';
-import 'package:path_challenge/presentation/widget/cached_network_image/cached_network_image_loading_widget.dart';
+import 'package:path_challenge/presentation/widget/shared/network_loading_widget.dart';
 import 'package:path_challenge/presentation/widget/character/character_card.dart';
 import 'package:shimmer/shimmer.dart';
 part '../view/widget/fetching_place_holder_cards.dart';
