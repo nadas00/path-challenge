@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.path_challenge">
+   <uses-permission android:name="android.pepermissionrmission.INTERNET"/>
    <application
-        android:label="path_challenge"
+        android:label="PATH Challenge"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
