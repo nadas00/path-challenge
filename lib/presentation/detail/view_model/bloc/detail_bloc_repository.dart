@@ -35,7 +35,6 @@ class DetailBlocRepository {
     try {
       characterComicsFetchStream.add(FetchingStatus.loaded);
     } catch (e) {
-      print(e);
       characterComicsFetchStream.add(FetchingStatus.failed);
     }
   }
