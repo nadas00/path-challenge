@@ -15,6 +15,7 @@ Used API : https://developer.marvel.com
 - Data : Retrofit services
 - Presentation :  Blocs, Bloc repositories and views
 - Products : Project specific services, models and more
+- Test : Unit test of network manager and home repository.
 
 ## Used API Points
 
