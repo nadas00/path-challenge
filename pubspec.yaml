@@ -23,12 +23,17 @@ dependencies:
   # CUSTOM WIDGETS
   infinite_scroll_pagination: ^3.1.0
   cached_network_image: ^3.2.0
+
+  # Generators
+  json_serializable: ^6.1.3
+  json_annotation: ^4.4.0
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  build_runner: ^2.1.7
 
 flutter:
   uses-material-design: true
