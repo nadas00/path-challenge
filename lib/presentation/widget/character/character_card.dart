@@ -68,16 +68,18 @@ class CharacterCard extends StatelessWidget {
                     if (text != null)
                       Text(
                         text!,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
-                            .headline2!
+                            .headline5!
                             .copyWith(color: Colors.white),
                       ),
                     if (text != subText)
                       Text(
                         subText!,
-                        maxLines: 4,
+                        maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context)
                             .textTheme
