@@ -3,7 +3,7 @@ import 'package:path_challenge/presentation/home/service/home_service.dart';
 import 'package:path_challenge/presentation/widget/character/character_card.dart';
 import 'package:path_challenge/presentation/home/model/network/characters_response_model.dart';
 
-class HomeBlocRepository {
+class HomeRepository {
   late final PagingController<int, CharacterCard> pagingController;
 
   late int _limit;
