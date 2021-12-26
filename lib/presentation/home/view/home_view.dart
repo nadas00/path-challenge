@@ -4,13 +4,13 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:path_challenge/presentation/detail/view/detail_view.dart';
 import 'package:path_challenge/presentation/home/view_model/bloc/home_bloc.dart';
 import 'package:path_challenge/presentation/home/view_model/bloc/home_bloc_repository.dart';
+import 'package:path_challenge/presentation/widget/cached_network_image/cached_network_image_loading_widget.dart';
 import 'package:path_challenge/presentation/widget/character/character_card.dart';
+import 'package:shimmer/shimmer.dart';
+part '../view/widget/fetching_place_holder_cards.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
-
-  final String ironManImg =
-      'https://www.jedbang.com/materials/images/products/products/3/3284/13728/kotobukiya-kk1-145-ironman-mk-xlv-art-fx-statue-s0-p5-1200x800-i13728.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +25,20 @@ class HomeView extends StatelessWidget {
             child: Builder(
               builder: (context) {
                 return BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, state) =>
-                      PagedListView<int, CharacterCard>(
+                  builder: (context, state) => PagedListView.separated(
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(width: 20);
+                    },
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    itemExtent: 350,
                     pagingController:
                         context.read<HomeBlocRepository>().pagingController,
                     builderDelegate: PagedChildBuilderDelegate<CharacterCard>(
-                      itemBuilder: (context, item, index) {
+                      firstPageProgressIndicatorBuilder: (context) =>
+                          const _FetchingPlaceHolderCards(initialFetch: true),
+                      newPageProgressIndicatorBuilder: (context) =>
+                          const _FetchingPlaceHolderCards(),
+                      itemBuilder: (context, CharacterCard item, index) {
                         return GestureDetector(
                           child: item,
                           onTap: () {

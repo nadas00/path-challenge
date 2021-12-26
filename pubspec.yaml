@@ -23,6 +23,7 @@ dependencies:
   # CUSTOM WIDGETS
   infinite_scroll_pagination: ^3.1.0
   cached_network_image: ^3.2.0
+  shimmer: ^2.0.0
 
   # Generators
   json_serializable: ^6.1.3

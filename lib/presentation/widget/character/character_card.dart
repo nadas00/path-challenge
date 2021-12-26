@@ -28,69 +28,70 @@ class CharacterCard extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Stack(
+          alignment: Alignment.bottomCenter,
           children: [
             if (charactersModel.hasThumbnail)
-              CachedNetworkImage(
-                imageUrl: charactersModel.createThumbnailUrl!,
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: ShapeDecoration(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30.0),
+              SizedBox(
+                height: 350,
+                child: CachedNetworkImage(
+                  imageUrl: charactersModel.createThumbnailUrl!,
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: ShapeDecoration(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30.0),
+                        ),
+                      ),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
                   ),
+                  placeholder: (context, url) =>
+                      const CachedNetworkLoadingWidget(),
+                  errorWidget: (context, url, error) =>
+                      const CachedNetworkFailWidget(),
                 ),
-                placeholder: (context, url) =>
-                    const CachedNetworkLoadingWidget(),
-                errorWidget: (context, url, error) =>
-                    const CachedNetworkFailWidget(),
               ),
             if (!displayImageOnly)
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: const EdgeInsets.all(16),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: charactersModel.hasCharacterNameAndDescription
-                        ? Colors.black54
-                        : null,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (charactersModel.hasCharacterName)
-                        Text(
-                          charactersModel.name!,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5!
-                              .copyWith(color: Colors.white),
-                        ),
-                      if (charactersModel.hasDescription)
-                        Text(
-                          charactersModel.description!,
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: Colors.white70),
-                        ),
-                    ],
-                  ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: charactersModel.hasCharacterNameAndDescription
+                      ? Colors.black54
+                      : null,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (charactersModel.hasCharacterName)
+                      Text(
+                        charactersModel.name!,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5!
+                            .copyWith(color: Colors.white),
+                      ),
+                    if (charactersModel.hasDescription)
+                      Text(
+                        charactersModel.description!,
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(color: Colors.white70),
+                      ),
+                  ],
                 ),
               ),
           ],
