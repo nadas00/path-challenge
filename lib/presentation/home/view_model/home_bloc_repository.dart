@@ -7,8 +7,12 @@ class HomeRepository {
   late final PagingController<int, CharacterCard> pagingController;
 
   late int _limit;
+  int get limit => _limit;
   late int _offset;
+  int get offset => _offset;
+
   late HomeService _service;
+  int? get total => _total;
   int? _total;
 
   init() {
@@ -69,8 +73,8 @@ class HomeRepository {
   void initPaginationController() {
     pagingController = PagingController<int, CharacterCard>(firstPageKey: 0);
     pagingController.addPageRequestListener(
-      (pageKey) {
-        fetchNewCharacterData(
+      (pageKey) async {
+        await fetchNewCharacterData(
           controller: pagingController,
           limit: _limit,
           offset: _offset,
