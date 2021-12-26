@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+
 import 'package:path_challenge/core/utils/extensions/widget/sliver_to_box_adapter_extension.dart';
+import 'package:path_challenge/presentation/home/model/network/characters_response_model.dart';
 import 'package:path_challenge/presentation/widget/character/character_card.dart';
 
 part 'widget/character_comics_list_view.dart';
 
 class CharacterDetailView extends StatelessWidget {
-  const CharacterDetailView({Key? key}) : super(key: key);
+  const CharacterDetailView({
+    Key? key,
+    required this.charactersModel,
+  }) : super(key: key);
 
-  final String ironManImg =
-      'https://www.jedbang.com/materials/images/products/products/3/3284/13728/kotobukiya-kk1-145-ironman-mk-xlv-art-fx-statue-s0-p5-1200x800-i13728.jpg';
-
+  final CharactersModel charactersModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
       backgroundColor: Colors.black,
       body: SafeArea(
         bottom: false,
@@ -22,19 +28,21 @@ class CharacterDetailView extends StatelessWidget {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) => [
               SliverAppBar(
+                automaticallyImplyLeading: false,
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 expandedHeight: 350,
                 floating: true,
                 flexibleSpace: FlexibleSpaceBar(
                   background: CharacterCard(
-                    url: ironManImg,
+                    displayImageOnly: true,
+                    charactersModel: charactersModel,
                   ),
                 ),
               ),
               const SizedBox(height: 20).toSliver,
               Text(
-                "Iron Man",
+                charactersModel.name ?? "Name Unknown",
                 style: Theme.of(context)
                     .textTheme
                     .headline4!
@@ -42,14 +50,14 @@ class CharacterDetailView extends StatelessWidget {
               ).toSliver,
               const SizedBox(height: 20).toSliver,
               Text(
-                "Iron Man" * 30,
+                charactersModel.description ?? "Description Unknown",
                 style: Theme.of(context)
                     .textTheme
                     .bodyText2!
                     .copyWith(color: Colors.white),
               ).toSliver
             ],
-            body: const _CharacterComicsListView(),
+            body: _CharacterComicsListView(comics: charactersModel.comics),
           ),
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:path_challenge/presentation/detail/view/detail_view.dart';
 import 'package:path_challenge/presentation/home/view_model/bloc/home_bloc.dart';
 import 'package:path_challenge/presentation/home/view_model/bloc/home_bloc_repository.dart';
 import 'package:path_challenge/presentation/widget/character/character_card.dart';
@@ -33,7 +34,20 @@ class HomeView extends StatelessWidget {
                         context.read<HomeBlocRepository>().pagingController,
                     builderDelegate: PagedChildBuilderDelegate<CharacterCard>(
                       itemBuilder: (context, item, index) {
-                        return item;
+                        return GestureDetector(
+                          child: item,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                fullscreenDialog: true,
+                                builder: (context) => CharacterDetailView(
+                                  charactersModel: item.charactersModel,
+                                ),
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                   ),

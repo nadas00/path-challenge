@@ -1,7 +1,9 @@
 part of '../detail_view.dart';
 
 class _CharacterComicsListView extends StatelessWidget {
+  final Series? comics;
   const _CharacterComicsListView({
+    this.comics,
     Key? key,
   }) : super(key: key);
 
@@ -9,11 +11,11 @@ class _CharacterComicsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       padding: const EdgeInsets.only(top: 36),
-      itemCount: 5,
+      itemCount: comics?.items?.length ?? 0,
       itemBuilder: (context, index) => Container(
         padding: const EdgeInsets.all(16),
         child: Text(
-          "Detail",
+          comics?.items?[index].name ?? "Unknown",
           style: Theme.of(context)
               .textTheme
               .bodyText1!
