@@ -8,17 +8,16 @@ part of 'characters_response_model.dart';
 
 CharacterResponseModel _$CharacterResponseModelFromJson(
         Map<String, dynamic> json) =>
-    CharacterResponseModel(
-      attributionHTML: json['attributionHTML'] as String?,
-      attributionText: json['attributionText'] as String?,
-      code: json['code'] as int?,
-      copyright: json['copyright'] as String?,
-      data: json['data'] == null
+    CharacterResponseModel()
+      ..attributionHTML = json['attributionHTML'] as String?
+      ..attributionText = json['attributionText'] as String?
+      ..code = json['code'] as int?
+      ..copyright = json['copyright'] as String?
+      ..data = json['data'] == null
           ? null
-          : Data.fromJson(json['data'] as Map<String, dynamic>),
-      etag: json['etag'] as String?,
-      status: json['status'] as String?,
-    );
+          : Data.fromJson(json['data'] as Map<String, dynamic>)
+      ..etag = json['etag'] as String?
+      ..status = json['status'] as String?;
 
 Map<String, dynamic> _$CharacterResponseModelToJson(
         CharacterResponseModel instance) =>
@@ -32,15 +31,14 @@ Map<String, dynamic> _$CharacterResponseModelToJson(
       'status': instance.status,
     };
 
-Data _$DataFromJson(Map<String, dynamic> json) => Data(
-      offset: json['offset'] as int?,
-      limit: json['limit'] as int?,
-      total: json['total'] as int?,
-      count: json['count'] as int?,
-      results: (json['results'] as List<dynamic>?)
-          ?.map((e) => CharactersModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+Data _$DataFromJson(Map<String, dynamic> json) => Data()
+  ..count = json['count'] as int?
+  ..limit = json['limit'] as int?
+  ..offset = json['offset'] as int?
+  ..results = (json['results'] as List<dynamic>?)
+      ?.map((e) => CharactersModel.fromJson(e as Map<String, dynamic>))
+      .toList()
+  ..total = json['total'] as int?;
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'count': instance.count,
@@ -79,17 +77,17 @@ CharactersModel _$CharactersModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CharactersModelToJson(CharactersModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'description': instance.description,
-      'modified': instance.modified,
-      'resourceURI': instance.resourceURI,
-      'urls': instance.urls?.map((e) => e.toJson()).toList(),
-      'thumbnail': instance.thumbnail?.toJson(),
       'comics': instance.comics?.toJson(),
-      'stories': instance.stories?.toJson(),
+      'description': instance.description,
       'events': instance.events?.toJson(),
+      'id': instance.id,
+      'modified': instance.modified,
+      'name': instance.name,
+      'resourceURI': instance.resourceURI,
       'series': instance.series?.toJson(),
+      'stories': instance.stories?.toJson(),
+      'thumbnail': instance.thumbnail?.toJson(),
+      'urls': instance.urls?.map((e) => e.toJson()).toList(),
     };
 
 Series _$SeriesFromJson(Map<String, dynamic> json) => Series(

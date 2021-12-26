@@ -5,40 +5,11 @@ import 'package:path_challenge/product/models/base/base_response_model.dart';
 part 'characters_response_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class CharacterResponseModel implements BaseResponseModel<Data> {
-  CharacterResponseModel({
-    this.attributionHTML,
-    this.attributionText,
-    this.code,
-    this.copyright,
-    this.data,
-    this.etag,
-    this.status,
-  });
+class CharacterResponseModel extends BaseResponseModel<Data> {
+  CharacterResponseModel();
 
   factory CharacterResponseModel.fromJson(Map<String, dynamic> json) =>
       _$CharacterResponseModelFromJson(json);
-
-  @override
-  String? attributionHTML;
-
-  @override
-  String? attributionText;
-
-  @override
-  int? code;
-
-  @override
-  String? copyright;
-
-  @override
-  Data? data;
-
-  @override
-  String? etag;
-
-  @override
-  String? status;
 
   Map<String, dynamic> toJson() => _$CharacterResponseModelToJson(this);
 
@@ -46,31 +17,10 @@ class CharacterResponseModel implements BaseResponseModel<Data> {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Data implements BaseResponseDataModel<List<CharactersModel>> {
-  Data({
-    required this.offset,
-    required this.limit,
-    required this.total,
-    required this.count,
-    required this.results,
-  });
+class Data extends BaseResponseDataModel<List<CharactersModel>> {
+  Data();
 
   factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
-
-  @override
-  int? count;
-
-  @override
-  int? limit;
-
-  @override
-  int? offset;
-
-  @override
-  List<CharactersModel>? results;
-
-  @override
-  int? total;
 
   Map<String, dynamic> toJson() => _$DataToJson(this);
 }
@@ -78,33 +28,33 @@ class Data implements BaseResponseDataModel<List<CharactersModel>> {
 @JsonSerializable(explicitToJson: true)
 class CharactersModel {
   CharactersModel({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.modified,
-    required this.resourceURI,
-    required this.urls,
-    required this.thumbnail,
-    required this.comics,
-    required this.stories,
-    required this.events,
-    required this.series,
+    this.id,
+    this.name,
+    this.description,
+    this.modified,
+    this.resourceURI,
+    this.urls,
+    this.thumbnail,
+    this.comics,
+    this.stories,
+    this.events,
+    this.series,
   });
 
   factory CharactersModel.fromJson(Map<String, dynamic> json) =>
       _$CharactersModelFromJson(json);
 
-  final int? id;
-  final String? name;
-  final String? description;
-  final String? modified;
-  final String? resourceURI;
-  final List<Urls>? urls;
-  final Thumbnail? thumbnail;
   final Series? comics;
-  final Series? stories;
+  final String? description;
   final Series? events;
+  final int? id;
+  final String? modified;
+  final String? name;
+  final String? resourceURI;
   final Series? series;
+  final Series? stories;
+  final Thumbnail? thumbnail;
+  final List<Urls>? urls;
 
   Map<String, dynamic> toJson() => _$CharactersModelToJson(this);
 
@@ -112,7 +62,9 @@ class CharactersModel {
       (thumbnail?.extension != null && thumbnail?.path != null);
 
   bool get hasCharacterName => name != null;
+
   bool get hasDescription => description != null;
+
   bool get hasCharacterNameAndDescription =>
       (name != null && description != null);
 
