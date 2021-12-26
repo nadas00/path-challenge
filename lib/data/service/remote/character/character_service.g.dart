@@ -14,7 +14,8 @@ class _CharacterService implements CharacterService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<CharacterResponseModel>> create() async {
+  Future<HttpResponse<CharacterResponseModel>> create(
+      {required limit, required offset}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -22,7 +23,8 @@ class _CharacterService implements CharacterService {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<CharacterResponseModel>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/characters',
+                .compose(
+                    _dio.options, '/characters?limit=${limit}&offset=${offset}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = CharacterResponseModel.fromJson(_result.data!);

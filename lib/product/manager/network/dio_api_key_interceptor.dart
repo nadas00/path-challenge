@@ -38,6 +38,6 @@ class ApiKeyInterceptor extends Interceptor {
     String hash,
     String apiKey,
   ) {
-    return '$path?ts=$ts&apikey=$apiKey&hash=$hash';
+    return '$path&ts=$ts&apikey=$apiKey&hash=$hash';
   }
 }

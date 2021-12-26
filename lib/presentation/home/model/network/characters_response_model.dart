@@ -41,6 +41,8 @@ class CharacterResponseModel implements BaseResponseModel<Data> {
   String? status;
 
   Map<String, dynamic> toJson() => _$CharacterResponseModelToJson(this);
+
+  bool? hasMoreRecords(int limit) => (data?.total ?? 0) > limit;
 }
 
 @JsonSerializable(explicitToJson: true)

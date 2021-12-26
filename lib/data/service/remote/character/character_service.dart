@@ -10,5 +10,8 @@ abstract class CharacterService {
   factory CharacterService(Dio dio, {String baseUrl}) = _CharacterService;
 
   @GET(ApiRoutes.characters)
-  Future<HttpResponse<CharacterResponseModel>> create();
+  Future<HttpResponse<CharacterResponseModel>> create({
+    @Path('limit') required int limit,
+    @Path('offset') required int offset,
+  });
 }
