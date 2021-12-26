@@ -26,13 +26,6 @@ class HomeBlocRepository {
         );
       },
     );
-
-    fetchNewCharacterData(
-      service: _service,
-      controller: pagingController,
-      offset: _offset,
-      limit: 30,
-    );
   }
 
   Future<void> fetchNewCharacterData({
